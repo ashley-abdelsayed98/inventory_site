@@ -1,0 +1,24 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+    <div>
+        <h1>Add New Warehouse</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Add warehouse">
+        </form>
+        <h1>All Warehouses</h1>
+        <table cellpadding="2" border="1">
+            <tr>
+                <th>Name</th>
+                <th>location</th>
+            </tr>
+            {% for warehouse in warehouses %}
+                <tr>
+                    <td><a href="{%url 'warehouse' warehouse_id=warehouse.id%}">{{ warehouse.name }}</a></td>
+                    <td>{{ warehouse.location|slice:":200" }} {% if warehouse.location|length > 200 %}...{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

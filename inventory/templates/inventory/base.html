@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inventory Site</title>
+    </head>
+    <header>
+        <nav>
+            <div>
+                <a href="{%url 'all_items'%}">Items</a>
+                <a href="{%url 'all_warehouses'%}">Warehouses</a>
+            </div>
+        </nav>
+    </header>
+    <body>
+        {% if messages %}
+            {% for message in messages %}
+                <h2>
+                    {{ message }}
+                </h2>
+            {% endfor %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </body>
+</html>

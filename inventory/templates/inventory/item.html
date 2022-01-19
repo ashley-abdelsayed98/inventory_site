@@ -1,0 +1,62 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+        <h1>Item: {{ item.name }}</h1>
+        <p>{{ item.description }}</p>
+        <p>${{ item.price|floatformat:2 }}</p>
+        <h1>Update Item</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Edit item" name="edit_item">
+        </form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete Item" name="delete_item">
+        </form>
+    <h1>Item inventory</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Add stock" name="add_stock">
+    </form>
+    </br>
+        <table cellpadding="2" border="1">
+            <tr>
+                <th>Warehouse</th>
+                <th>Location</th>
+                <th>Available Stock</th>
+                <th>Actions</th>
+            </tr>
+            {% for inventory in available_stock %}
+                <tr>
+                    <td><a href="{%url 'warehouse' warehouse_id=inventory.warehouse.id%}">{{ inventory.warehouse.name }}</a></td>
+                    <td>{{ inventory.warehouse.location|slice:":200" }} </td>
+                    {% if editing_id == inventory.id %}
+                        <form method="post">
+                        {% csrf_token %}
+                            <td>
+                                <input type='number' value={{inventory.stock}} name='edited_stock' min=0>
+                            </td>
+                            <td>
+                                <button type="submit" name="edit_inventory_confirm" value={{inventory.id}}>Confirm</button>
+                                <button type="submit" name="edit_inventory_cancel" value={{inventory.id}}>Cancel</button>
+                            </td>
+                        </form>
+
+                    {% else %}
+                        <td>{{ inventory.stock }}</td>
+                        <td>
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="edit_inventory" value={{inventory.id}}>Edit Stock</button>
+                            </form>
+                            <form method="post">
+                                {% csrf_token %}
+                                <button type="submit" name="delete_inventory" value={{inventory.id}}>Delete Stock</button>
+                            </form>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

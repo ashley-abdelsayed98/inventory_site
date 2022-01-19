@@ -1,0 +1,15 @@
+{% extends "inventory/base.html" %}
+{% block content %}
+        <h1>Warehouse: {{ warehouse.name }}</h1>
+        <p>{{ warehouse.location }}</p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Edit Warehouse" name="edit_warehouse">
+        </form>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete Warehouse" name="delete_warehouse">
+        </form>
+    </br>
+{% endblock content %}
