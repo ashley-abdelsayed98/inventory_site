@@ -1,4 +1,3 @@
-from django.db.models.fields import UUIDField
 from ..models import Product
 
 def create_product(name, description:str = None, price:float = None):

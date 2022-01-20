@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 
-from ..crud import crud_item, crud_inventory
+from ..crud import crud_product, crud_inventory
 from ..models import WarehouseInventory
 
 
@@ -11,11 +11,11 @@ class InventoryCreateView(CreateView):
     fields = ['warehouse', 'stock']
 
     def form_valid(self, form):
-        item_id = self.kwargs.get('item_id')
-        item = crud_item.get_item(id=item_id)
-        form.instance.item = item
+        product_id = self.kwargs.get('product_id')
+        product = crud_product.get_product(id=product_id)
+        form.instance.product = product
 
-        existing_stock = crud_inventory.get_inventory_by_warehouse_and_item(item_id=item_id, warehouse_id=form.instance.warehouse.id)
+        existing_stock = crud_inventory.get_inventory_by_warehouse_and_product(product_id=product_id, warehouse_id=form.instance.warehouse.id)
         if existing_stock:
             form.instance.id = existing_stock.id
             form.instance.stock = existing_stock.stock + form.instance.stock
@@ -31,5 +31,5 @@ class InventoryDeleteView(DeleteView):
     model = WarehouseInventory
 
     def get_success_url(self):
-        item_id = self.get_object().item.id
-        return reverse_lazy('item', kwargs={'item_id': item_id})
+        product_id = self.get_object().product.id
+        return reverse_lazy('product', kwargs={'product_id': product_id})

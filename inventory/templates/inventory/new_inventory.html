@@ -1,7 +1,7 @@
 {% extends "inventory/base.html" %}
 {% block content %}
     <div>
-        <h1>Add inventory for {{item_name}}</h1>
+        <h1>Add inventory for {{product_name}}</h1>
         <form method="post">
             {% csrf_token %}
             {{ form }}

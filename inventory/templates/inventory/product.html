@@ -1,16 +1,16 @@
 {% extends "inventory/base.html" %}
 {% block content %}
-        <h1>Item: {{ item.name }}</h1>
-        <p>{{ item.description }}</p>
-        <p>${{ item.price|floatformat:2 }}</p>
+        <h1>Product: {{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <p>${{ product.price|floatformat:2 }}</p>
         <button>
-            <a href="{%url 'edit_item' pk=item.id%}">Edit</a>
+            <a href="{%url 'edit_product' pk=product.id%}">Edit</a>
         </button>
-        <form method="post" action="{% url "delete_item" pk=item.id%}">
+        <form method="post" action="{% url "delete_product" pk=product.id%}">
             {% csrf_token %}
             <input type="submit" value="Delete"> 
         </form> 
-    <h1>Item inventory</h1>
+    <h1>Product inventory</h1>
     <form method="post">
         {% csrf_token %}
         <input type="submit" value="Add stock" name="add_stock">

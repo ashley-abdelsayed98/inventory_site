@@ -1,8 +1,8 @@
-from ..models import Item, WarehouseInventory
-from . import crud_item, crud_warehouse
+from ..models import Product, WarehouseInventory
+from . import crud_product, crud_warehouse
 
-def create_inventory(item_id, warehouse_id, stock)->None:
-    new_warehouse = WarehouseInventory(item=crud_item.get_item(id=item_id), 
+def create_inventory(product_id, warehouse_id, stock)->None:
+    new_warehouse = WarehouseInventory(product=crud_product.get_product(id=product_id), 
                                         warehouse=crud_warehouse.get_warehouse(id=warehouse_id), 
                                         stock=stock)
     new_warehouse.save()
@@ -11,11 +11,11 @@ def create_inventory(item_id, warehouse_id, stock)->None:
 def get_inventory(id:int)->WarehouseInventory:
     return WarehouseInventory.objects.filter(id=id).first()
 
-def get_inventory_by_warehouse_and_item(item_id:int, warehouse_id:int)->WarehouseInventory:
-    return WarehouseInventory.objects.filter(item_id=item_id, warehouse_id = warehouse_id).first()
+def get_inventory_by_warehouse_and_product(product_id:int, warehouse_id:int)->WarehouseInventory:
+    return WarehouseInventory.objects.filter(product_id=product_id, warehouse_id = warehouse_id).first()
 
-def get_all_inventory_by_item(item:Item)->list[WarehouseInventory]:
-    return WarehouseInventory.objects.filter(item=item)
+def get_all_inventory_by_product(product:Product)->list[WarehouseInventory]:
+    return WarehouseInventory.objects.filter(product=product)
 
 def get_warehouse(name:str)->WarehouseInventory:
     return WarehouseInventory.objects.filter(name=name).first()

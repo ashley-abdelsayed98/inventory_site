@@ -1,11 +1,11 @@
 from typing import Optional
 from django import forms
-from .models import Item, Warehouse, WarehouseInventory
-from .crud import crud_item, crud_warehouse
+from .models import Product, Warehouse, WarehouseInventory
+from .crud import crud_product, crud_warehouse
 
-class ItemForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = Item
+        model = Product
         fields = ['name', 'description', 'price']
 
 class WarehouseInventoryForm(forms.ModelForm):
