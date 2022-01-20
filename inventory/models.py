@@ -1,7 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator
-
-# Create your models here.
+from django.urls import reverse_lazy
 
 class Item(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -9,14 +7,23 @@ class Item(models.Model):
     price = models.FloatField()
     def __str__(self):
         return f"Item : {self.name}"
+    
+    def get_absolute_url(self):
+        return reverse_lazy('item', kwargs={'item_id': self.id})
 
 class Warehouse(models.Model):
     name = models.CharField(unique=True, max_length=50)
     location = models.CharField(max_length=200)
     def __str__(self):
         return f"{self.name}, Location: {self.location}"
+    
+    def get_absolute_url(self):
+        return reverse_lazy('warehouse', kwargs={'pk': self.id})
 
 class WarehouseInventory(models.Model):
     item = models.ForeignKey(to=Item, on_delete=models.CASCADE)
     warehouse = models.ForeignKey(to=Warehouse, on_delete=models.CASCADE)
     stock = models.PositiveBigIntegerField(default=0)
+
+    def get_absolute_url(self):
+        return reverse_lazy('item', kwargs={'item_id': self.item.id})

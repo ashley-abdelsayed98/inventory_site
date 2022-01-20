@@ -1,15 +1,13 @@
 {% extends "inventory/base.html" %}
 {% block content %}
-        <h1>Warehouse: {{ warehouse.name }}</h1>
-        <p>{{ warehouse.location }}</p>
-        <form method="post">
+        <h1>Warehouse: {{ object.name }}</h1>
+        <p>{{ object.location }}</p>
+        <button>
+            <a href="{%url 'edit_warehouse' pk=object.id%}">Edit</a>
+        </button>
+        <form method="post" action="{% url "delete_warehouse" pk=object.id%}">
             {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Edit Warehouse" name="edit_warehouse">
-        </form>
-        <form method="post">
-            {% csrf_token %}
-            <input type="submit" value="Delete Warehouse" name="delete_warehouse">
-        </form>
+            <input type="submit" value="Delete"> 
+        </form> 
     </br>
 {% endblock content %}

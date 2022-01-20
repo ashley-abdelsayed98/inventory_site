@@ -1,32 +1,25 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import UpdateView, DeleteView, DetailView
 
 from ..crud import crud_warehouse
 from ..forms import WarehouseForm
+from ..models import Warehouse
 
 
-def warehouse(request, warehouse_id):
-    warehouse = crud_warehouse.get_warehouse(id=warehouse_id)
-    if request.POST.get('edit_warehouse'):       
-        form = WarehouseForm(request.POST, instance=warehouse)
-        if form.is_valid():
-            warehouse_name = form.cleaned_data.get('name')
-            warehouse_location = form.cleaned_data.get('location')
-            crud_warehouse.update_warehouse(id= warehouse_id,name=warehouse_name, location=warehouse_location)
-        else: 
-            messages.error(request, "Warehouse name or location too long")
-        return redirect('warehouse', warehouse_id=warehouse_id)
-    elif request.POST.get('delete_warehouse'):
-        crud_warehouse.delete_warehouse(id=warehouse_id)
-        messages.success(request, f"Succesfully deleted warehouse: {warehouse.name}")
-        return redirect('all_warehouses')
-    else:
-        form = WarehouseForm(instance=warehouse)
-        context = { 
-                    'warehouse': warehouse,
-                    'form': form
-                }
-        return render(request=request, template_name="inventory/warehouse.html", context=context)
+class WarehouseDetailView(DetailView):
+    model = Warehouse
+    template_name = 'inventory/warehouse.html'
+
+class WarehouseUpdateView(UpdateView):
+    model = Warehouse
+    template_name = 'inventory/edit_warehouse.html'
+    fields = ['name', 'location']
+
+class WarehouseDeleteView(DeleteView):
+    model = Warehouse
+    success_url = reverse_lazy('all_warehouses')
 
 def all_warehouses(request):
     if request.method == 'POST':       
