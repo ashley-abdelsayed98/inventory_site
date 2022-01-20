@@ -5,6 +5,7 @@ from ..crud import crud_product, crud_inventory
 from ..models import WarehouseInventory
 
 
+# Create Inventory, Inventory holds the amount of stock of a product at a certain warehouse
 class InventoryCreateView(CreateView):
     model = WarehouseInventory
     template_name = 'inventory/new_inventory.html'
@@ -22,11 +23,13 @@ class InventoryCreateView(CreateView):
 
         return super().form_valid(form)
 
+# Update the stock of a product at a certain warehouse
 class InventoryUpdateView(UpdateView):
     model = WarehouseInventory
     template_name = 'inventory/edit_inventory.html'
     fields = ['warehouse', 'stock']
 
+# Delete stock of a product at a certain warehouse
 class InventoryDeleteView(DeleteView):
     model = WarehouseInventory
 

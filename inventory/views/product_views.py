@@ -9,15 +9,18 @@ from ..forms import ProductForm
 from ..models import Product
 
 
+# Update the product information
 class ProductUpdateView(UpdateView):
     model = Product
     template_name = 'inventory/edit_product.html'
     fields = ['name', 'description', 'price']
 
+# Delete the product
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy('all_products')
 
+# Displays all the stock of a product at different warehouses and redirects to add new stock  
 def product(request, product_id):
     product = crud_product.get_product(id=product_id)
     stock = crud_inventory.get_all_inventory_by_product(product)
@@ -36,6 +39,7 @@ def product(request, product_id):
                 }
         return render(request=request, template_name="inventory/product.html", context=context)
 
+# Display all products and add new products
 def all_products(request):
     if request.method == 'POST':       
         form = ProductForm(request.POST)

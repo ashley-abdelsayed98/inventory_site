@@ -21,7 +21,7 @@ class Warehouse(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('warehouse', kwargs={'pk': self.id})
 
-class WarehouseInventory(models.Model):
+class WarehouseInventory(models.Model): # Holds how much of a product stock is at a specific warehouse 
     product = models.ForeignKey(to=Product, on_delete=models.CASCADE)
     warehouse = models.ForeignKey(to=Warehouse, on_delete=models.CASCADE)
     stock = models.PositiveBigIntegerField(default=0)

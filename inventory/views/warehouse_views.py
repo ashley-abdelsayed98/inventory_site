@@ -8,19 +8,23 @@ from ..forms import WarehouseForm
 from ..models import Warehouse
 
 
+# View Warehouse information
 class WarehouseDetailView(DetailView):
     model = Warehouse
     template_name = 'inventory/warehouse.html'
 
+#Update Warehouse information
 class WarehouseUpdateView(UpdateView):
     model = Warehouse
     template_name = 'inventory/edit_warehouse.html'
     fields = ['name', 'location']
 
+# Delete Warehouse information
 class WarehouseDeleteView(DeleteView):
     model = Warehouse
     success_url = reverse_lazy('all_warehouses')
 
+# Display all warehouses and add new warehouses
 def all_warehouses(request):
     if request.method == 'POST':       
         form = WarehouseForm(request.POST)

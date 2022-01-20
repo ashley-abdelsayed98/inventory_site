@@ -17,9 +17,6 @@ def get_inventory_by_warehouse_and_product(product_id:int, warehouse_id:int)->Wa
 def get_all_inventory_by_product(product:Product)->list[WarehouseInventory]:
     return WarehouseInventory.objects.filter(product=product)
 
-def get_warehouse(name:str)->WarehouseInventory:
-    return WarehouseInventory.objects.filter(name=name).first()
-
 def update_warehouse_inventory(id:int, new_stock:int)->None:
     inventory = get_inventory(id)
     inventory.stock = new_stock
